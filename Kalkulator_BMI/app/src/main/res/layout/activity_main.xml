@@ -50,6 +50,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wzrost" />
 
+    <Button
+        android:id="@+id/btn_wyczysc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clear_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_oblicz" />
+
     <TextView
         android:id="@+id/wynik"
         android:layout_width="wrap_content"
@@ -58,15 +68,14 @@
         android:text="@string/bmi_result_prefix"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_oblicz" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_wyczysc" />
 
     <TextView
         android:id="@+id/intepretacja"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wynik" />
 
