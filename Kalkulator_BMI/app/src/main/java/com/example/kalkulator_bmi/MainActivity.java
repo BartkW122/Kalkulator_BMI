@@ -1,6 +1,7 @@
 package com.example.kalkulator_bmi;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private static final String WAGA_KEY = "WAGA";
+    private static final String WZROST_KEY = "WZROST";
     private EditText waga, wzrost;
     private Button btn_oblicz,btn_wyczysc;
     private TextView wynik,interpretacja;
@@ -35,9 +39,23 @@ public class MainActivity extends AppCompatActivity {
         wynik=findViewById(R.id.wynik);
         interpretacja=findViewById(R.id.intepretacja);
 
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+
+        String savedWaga = prefs.getString(WAGA_KEY, "Brak zapisanych danych.");
+        String savedWzrost = prefs.getString(WZROST_KEY, "Brak zapisanych danych.");
+
+        waga.setText(savedWaga);
+        wzrost.setText(savedWzrost);
         btn_oblicz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
+
+                editor.putString(WAGA_KEY,waga.getText().toString().trim());
+                editor.putString(WZROST_KEY,wzrost.getText().toString().trim());
+
+                editor.apply();
+
                 calculateBmi();
             }
         });
