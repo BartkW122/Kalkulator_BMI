@@ -3,6 +3,8 @@ package com.example.kalkulator_bmi;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "MyPrefsFile";
     private static final String WAGA_KEY = "WAGA";
     private static final String WZROST_KEY = "WZROST";
+
     private EditText waga, wzrost;
     private Button btn_oblicz,btn_wyczysc;
     private TextView wynik,interpretacja;
@@ -41,21 +44,53 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
-        String savedWaga = prefs.getString(WAGA_KEY, "Brak zapisanych danych.");
-        String savedWzrost = prefs.getString(WZROST_KEY, "Brak zapisanych danych.");
+        String savedWaga = prefs.getString(WAGA_KEY, "0");
+        String savedWzrost = prefs.getString(WZROST_KEY, "0");
 
         waga.setText(savedWaga);
         wzrost.setText(savedWzrost);
+
+        SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
+
+        waga.addTextChangedListener(new TextWatcher(){
+            @Override
+            public void afterTextChanged(Editable editable) {
+                editor.putString(WAGA_KEY,editable.toString());
+                editor.apply();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+        });
+
+        wzrost.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+                editor.putString(WZROST_KEY,editable.toString());
+                editor.apply();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+        });
+
         btn_oblicz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
-
-                editor.putString(WAGA_KEY,waga.getText().toString().trim());
-                editor.putString(WZROST_KEY,wzrost.getText().toString().trim());
-
-                editor.apply();
-
                 calculateBmi();
             }
         });
